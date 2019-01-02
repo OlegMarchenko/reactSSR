@@ -89,7 +89,7 @@ app.use((0, _cors2.default)());
 // client bundle.js file will end up.
 app.use(_express2.default.static("public"));
 
-app.listen(3000, function () {
+app.listen(4000, function () {
     console.log("Server is listening on port: 3000");
 });
 
