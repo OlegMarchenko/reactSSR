@@ -60,23 +60,39 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ (function(module, exports) {
+
+module.exports = require("react");
+
+/***/ }),
+/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _express = __webpack_require__(1);
+var _express = __webpack_require__(2);
 
 var _express2 = _interopRequireDefault(_express);
 
-var _cors = __webpack_require__(2);
+var _cors = __webpack_require__(3);
 
 var _cors2 = _interopRequireDefault(_cors);
+
+var _server = __webpack_require__(4);
+
+var _App = __webpack_require__(5);
+
+var _App2 = _interopRequireDefault(_App);
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -89,21 +105,83 @@ app.use((0, _cors2.default)());
 // client bundle.js file will end up.
 app.use(_express2.default.static("public"));
 
-app.listen(4000, function () {
-    console.log("Server is listening on port: 3000");
+app.get("*", function (req, res, next) {
+  var markup = (0, _server.renderToString)(_react2.default.createElement(_App2.default, null));
+
+  res.send("\n    <!DOCTYPE html>\n    <html>\n      <head>\n        <title>SSR with RR</title>\n        <script src=\"/bundle.js\" defer></script>\n      </head>\n      <body>\n        <div id=\"app\">" + markup + "</div>s\n      </body>\n    </html>\n  ");
 });
 
-/***/ }),
-/* 1 */
-/***/ (function(module, exports) {
-
-module.exports = require("express");
+app.listen(4000, function () {
+  console.log("Server is listening on port: 4000");
+});
 
 /***/ }),
 /* 2 */
 /***/ (function(module, exports) {
 
+module.exports = require("express");
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports) {
+
 module.exports = require("cors");
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports) {
+
+module.exports = require("react-dom/server");
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var App = function (_Component) {
+    _inherits(App, _Component);
+
+    function App() {
+        _classCallCheck(this, App);
+
+        return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).apply(this, arguments));
+    }
+
+    _createClass(App, [{
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                'div',
+                null,
+                'Hello World'
+            );
+        }
+    }]);
+
+    return App;
+}(_react.Component);
+
+exports.default = App;
 
 /***/ })
 /******/ ]);
