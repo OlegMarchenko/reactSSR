@@ -14504,7 +14504,7 @@ app.get("*", function (req, res, next) {
   res.send("\n    <!DOCTYPE html>\n    <html>\n      <head>\n        <title>SSR with RR</title>\n        <script src=\"/bundle.js\" defer></script>\n      </head>\n      <body>\n        <div id=\"app\">" + markup + "</div>\n      </body>\n    </html>\n  ");
 });
 
-app.listen(3000, function () {
+app.listen(4000, function () {
   console.log("Server is listening on port: 3000");
 });
 
