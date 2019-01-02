@@ -111,8 +111,16 @@ app.get("*", function (req, res, next) {
   res.send("\n    <!DOCTYPE html>\n    <html>\n      <head>\n        <title>SSR with RR</title>\n        <script src=\"/bundle.js\" defer></script>\n      </head>\n      <body>\n        <div id=\"app\">" + markup + "</div>s\n      </body>\n    </html>\n  ");
 });
 
-app.listen(4000, function () {
-  console.log("Server is listening on port: 4000");
+process.on("uncaughtException", function (err) {
+  console.log(err);
+});
+
+process.on("unhandledRejection", function (reason) {
+  console.log(reason);
+});
+
+app.listen(5000, function () {
+  console.log("Server is listening on port: 3000");
 });
 
 /***/ }),
