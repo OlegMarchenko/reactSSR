@@ -3,6 +3,11 @@ var webpack = require('webpack');
 var nodeExternals = require('webpack-node-externals');
 
 var browserConfig = {
+    node: {
+        fs: 'empty',
+        net: 'empty',
+        dns: 'empty'
+    },
     entry: './src/browser/index.js',
     output: {
         path: path.resolve(__dirname, 'public'),
