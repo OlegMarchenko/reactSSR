@@ -1,10 +1,12 @@
 import express from "express"
 import cors from "cors"
-import { renderToString } from "react-dom/server"
+import {renderToString} from "react-dom/server"
 import App from '../shared/App'
 import React from 'react'
 import serialize from "serialize-javascript"
-import { fetchPopularRepos } from '../shared/api'
+import {fetchPopularRepos} from '../shared/api'
+import {StaticRouter, matchPath} from "react-router-dom"
+import routes from '../shared/routes'
 
 const app = express();
 
@@ -16,35 +18,45 @@ app.use(cors());
 app.use(express.static("public"));
 
 app.get("*", (req, res, next) => {
-    fetchPopularRepos()
-        .then((data) => {
-            const markup = renderToString(
-                <App data={data} />
-            );
+    const activeRoute = routes.find((route) => matchPath(req.url, route)) || {}
 
-            res.send(`
-        <!DOCTYPE html>
-        <html>
-          <head>
-            <title>SSR with RR</title>
-            <script src="/bundle.js" defer></script>
-            <script>window.__INITIAL_DATA__ = ${serialize(data)}</script>
-          </head>
+    const promise = activeRoute.fetchInitialData
+        ? activeRoute.fetchInitialData(req.path)
+        : Promise.resolve();
 
-          <body>
-            <div id="app">${markup}</div>
-          </body>
-        </html>
-      `)
-        })
+    promise.then((data) => {
+
+        const context = { data };
+
+        const markup = renderToString(
+            <StaticRouter location={req.url} context={context}>
+                <App />
+            </StaticRouter>
+        );
+
+        res.send(`
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>SSR with RR</title>
+          <script src="/bundle.js" defer></script>
+          <script>window.__INITIAL_DATA__ = ${serialize(data)}</script>
+        </head>
+
+        <body>
+          <div id="app">${markup}</div>
+        </body>
+      </html>
+    `)
+    }).catch(next)
 });
 
 process.on("uncaughtException", (err) => {
-  console.log(err);
+    console.log(err);
 });
 
 process.on("unhandledRejection", (reason) => {
-  console.log(reason);
+    console.log(reason);
 });
 
 app.listen(5000, () => {

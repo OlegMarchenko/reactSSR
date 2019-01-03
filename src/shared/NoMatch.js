@@ -1,11 +1,9 @@
 import React from 'react'
 
-function Home () {
+export default function NoMatch () {
     return (
         <div>
-            Select a Language
+            Four Oh Four
         </div>
     )
 }
-
-export default Home;
