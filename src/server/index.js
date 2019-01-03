@@ -32,6 +32,14 @@ app.get("*", (req, res, next) => {
   `)
 });
 
-app.listen(4000, () => {
-    console.log(`Server is listening on port: 4000`)
+process.on("uncaughtException", (err) => {
+  console.log(err);
+});
+
+process.on("unhandledRejection", (reason) => {
+  console.log(reason);
+});
+
+app.listen(5000, () => {
+    console.log(`Server is listening on port: 3000`)
 });

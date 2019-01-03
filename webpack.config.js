@@ -4,9 +4,8 @@ var nodeExternals = require('webpack-node-externals');
 
 var browserConfig = {
     node: {
-        fs: 'empty',
-        net: 'empty',
-        dns: 'empty'
+        __dirname: false,
+        __filename: false
     },
     entry: './src/browser/index.js',
     output: {
