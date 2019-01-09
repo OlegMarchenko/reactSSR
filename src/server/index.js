@@ -41,6 +41,7 @@ app.get("*", (req, res, next) => {
           <title>SSR with RR</title>
           <script src="/bundle.js" defer></script>
           <script>window.__INITIAL_DATA__ = ${serialize(data)}</script>
+          <link rel="stylesheet" href="styles.css">
         </head>
 
         <body>
