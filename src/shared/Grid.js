@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 
+import './styles.scss'
+
 class Grid extends Component {
     constructor(props) {
         super(props);
@@ -53,7 +55,7 @@ class Grid extends Component {
         }
 
         return (
-            <ul style={{display: 'flex', flexWrap: 'wrap'}}>
+            <ul className="app" style={{display: 'flex', flexWrap: 'wrap'}}>
                 {repos.map(({ name, owner, stargazers_count, html_url }) => (
                     <li key={name} style={{margin: 30}}>
                         <ul>
