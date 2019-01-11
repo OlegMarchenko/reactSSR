@@ -18,7 +18,7 @@ app.use(cors());
 app.use(express.static("public"));
 
 app.get("*", (req, res, next) => {
-    const activeRoute = routes.find((route) => matchPath(req.url, route)) || {}
+    const activeRoute = routes.find((route) => matchPath(req.url, route)) || {};
 
     const promise = activeRoute.fetchInitialData
         ? activeRoute.fetchInitialData(req.path)
@@ -41,7 +41,8 @@ app.get("*", (req, res, next) => {
           <title>SSR with RR</title>
           <script src="/bundle.js" defer></script>
           <script>window.__INITIAL_DATA__ = ${serialize(data)}</script>
-          <link rel="stylesheet" href="styles.css">
+          <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
+          <link rel="stylesheet" href="../styles.css">
         </head>
 
         <body>
